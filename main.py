@@ -22,8 +22,8 @@ data = pd.DataFrame(columns=[
 ])
 data.loc[0] = [
     0,
-    28.3344342,
-    77.3170657,
+    28.6190702,
+    77.0250407,
     2,
     4,
     1,
@@ -37,19 +37,42 @@ data.loc[0] = [
         [208, 232, 278, 355],
         [304, 229, 378, 354],
     ],
-    [1, 1, 0, 0, 0, 0, 1, 0],
+    [0, 0, 0, 0, 0, 0, 1, 0],
     100,
-    "Parkspot",
-    "1234567890",
+    "DeepakPark",
+    "8802490936"
 ]
-updater(data)
+
+data.loc[1] = [
+    1,
+    28.3652058,
+    77.31994569999999,
+    4,
+    2,
+    3,
+    [
+        [95,40,194,111],
+        [95,140,195,198],
+        [95,236,195,295],
+        [93,309,195,380],
+        [238,35,329,108],
+        [231,131,334,201],
+        [231,240,335,299],
+        [228,309,338,380]
+    ],
+    [1, 1, 0, 0, 0, 0, 1, 0],
+    1000,
+    "KunalPark",
+    "999468758"
+]
+# updater(data)
 
 
 @app.route("/", methods=["GET"])
 def main():
     lat = float(request.args.get("lat"))
     lon = float(request.args.get("lon"))
-    req_data = data[dist(data['latitude'], data['longitude'], lat, lon) < 500]
+    req_data = data[dist(data['latitude'], data['longitude'], lat, lon) < 5000]
     res = [{"id": str(d['spot_id']),
             "latitude": str(d['latitude']),
             "longitude": str(d['longitude']),
