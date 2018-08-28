@@ -22,7 +22,9 @@ We will build a system using computer vision that will parse parking space data 
 * Data from all such parking spaces in city will be parsed to centralized cloud database.
 * Any driver in the city can see nearest available parking spot for their vehicle on their mobile devices.
 
-<img alt="" src="https://github.com/i-amgeek/MoveHack/blob/master/images/Screenshot1.jpg"/>
+<p align="center">
+<img alt="" src="https://github.com/i-amgeek/MoveHack/blob/master/images/Screenshot1.jpg" width = "300" height = "500"/>
+</p>
 
 * Driver can select parking spot to view details, available slots and book them.
 ![](https://)
