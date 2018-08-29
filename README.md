@@ -16,7 +16,7 @@ We will build a system using computer vision that will parse parking space data 
 
 ## Implementation
 * A camera at parking space will take images after regular interval.
-![](https://raw.githubusercontent.com/i-amgeek/MoveHack/master/images/dropbox_image.jpeg)
+<img alt="" src="https://raw.githubusercontent.com/i-amgeek/MoveHack/master/images/dropbox_image.jpeg" width = "300" height = "300"/>
 * Feed those images to a deep learning architecture to detect available parking spots.
 ![](https://raw.githubusercontent.com/kunalgoyal9/MoveHack/master/images/KunalPark2.png)
 * Data from all such parking spaces in city will be parsed to centralized cloud database.
