@@ -2,7 +2,7 @@
 # Centralised Parking Assistance Using Computer Vision
 
 <p align="center">
-<img alt="" src="https://github.com/i-amgeek/MoveHack/blob/master/images/app_logo.png"/>
+<img alt="" src="https://github.com/i-amgeek/MoveHack/blob/master/images/app_logo.png" width = "380" height = "300"/>
 </p>
 
 ## Problem statement
@@ -16,9 +16,13 @@ We will build a system using computer vision that will parse parking space data 
 
 ## Implementation
 * A camera at parking space will take images after regular interval.
-<img alt="" src="https://raw.githubusercontent.com/i-amgeek/MoveHack/master/images/dropbox_image.jpeg" width = "300" height = "300"/>
+
+<img alt="" src="https://raw.githubusercontent.com/i-amgeek/MoveHack/master/images/dropbox_image.jpeg" width = "400" height = "320"/>
+
 * Feed those images to a deep learning architecture to detect available parking spots.
-![](https://raw.githubusercontent.com/kunalgoyal9/MoveHack/master/images/KunalPark2.png)
+
+<img alt="" src="https://raw.githubusercontent.com/kunalgoyal9/MoveHack/master/images/KunalPark2.png" width = "400" height = "400"/>
+
 * Data from all such parking spaces in city will be parsed to centralized cloud database.
 * Any driver in the city can see nearest available parking spot for their vehicle on their mobile devices.
 
