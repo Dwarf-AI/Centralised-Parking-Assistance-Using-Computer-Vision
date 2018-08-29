@@ -27,7 +27,7 @@ We will build a system using computer vision that will parse parking space data 
 * Any driver in the city can see nearest available parking spot for their vehicle on their mobile devices.
 
 <p align="center">
-<img alt="" src="https://github.com/i-amgeek/MoveHack/blob/master/images/Screenshot1.jpg" width = "300" height = "500"/>
+<img alt="" src="https://github.com/i-amgeek/MoveHack/blob/master/images/Screenshot1.jpg" width = "250" height = "400"/>
 </p>
 
 * Driver can select parking spot to view details, available slots and book them.
