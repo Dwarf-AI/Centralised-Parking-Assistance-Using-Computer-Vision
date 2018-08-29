@@ -27,7 +27,6 @@ We will build a system using computer vision that will parse parking space data 
 </p>
 
 * Driver can select parking spot to view details, available slots and book them.
-![](https://)
 
 ## Model Architecture
 We choose to fine-tune the pre-trained VGGNet (specifically its F-variant). The pre-trained weights can be obtained from [here](http://www.vlfeat.org/matconvnet/models/imagenet-vgg-f.mat).
@@ -49,5 +48,12 @@ image of each parking lot, we end up with ~ 695600 images of size 54x32.
 
 Use [pip](https://pypi.python.org/pypi/pip) to install them.
 
+## Testing
+1. cd test\ model.
+1. Install all Dependencies.
+2. Download weights from [here](https://drive.google.com/open?id=0B76BuJcKjuxqYXRmSzd2R3U4S2c) to weights/.
+3. Run 'python3.6 test.py'.
+
 ## Todo
 * Add payment gateway.
+* Make bash script to automate testing.
