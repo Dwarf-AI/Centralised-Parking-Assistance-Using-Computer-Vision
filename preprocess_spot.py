@@ -21,7 +21,7 @@ url = "https://api.dropboxapi.com/2/files/list_folder"
 
 #************assign new directory with new_spot_idx in dropbox and upload image to this directory*************
 
-new_spot_idx = 1 #update it
+new_spot_idx = 2 #update it
 
 payload = f"{{\"path\": \"/Apps/IP Webcam/{new_spot_idx}\"}}"
 

@@ -65,7 +65,33 @@ data.loc[1] = [
     "KunalPark",
     "999468758"
 ]
-# updater(data)
+
+
+data.loc[2] = [
+    2,
+    28.5946,
+    77.0184,
+    3,
+    3,
+    9,
+    [
+        [80,87,177,153],
+        [198,85,297,148],
+        [317,84,445,150],
+        [79,184,178,254],
+        [192,185,297,256],
+        [317,187,448,253],
+        [79,271,182,344],
+        [193,272,300,343],
+        [316,275,449,340]
+    ],
+    [1, 1, 1, 1, 1, 1, 1, 1,1],
+    200,
+    "AbhishekPark",
+    "1234567890"
+]
+
+updater(data)
 
 
 @app.route("/", methods=["GET"])
@@ -86,10 +112,16 @@ def details():
     idx = int(request.args.get("id"))
     print('something')
     res = {
-        "rows": str(data[data['spot_id'] == idx].rows[0]),
-        "cols": str(data[data['spot_id'] == idx].cols[0]),
+        "id": str(idx),
+        "latitute": str(data[data['spot_id']==idx].latitude.values[0]),
+        "longitude": str(data[data['spot_id']==idx].longitude.values[0]),
+        "rows": str(data[data['spot_id'] == idx].rows.values[0]),
+        "cols": str(data[data['spot_id'] == idx].cols.values[0]),
+        "slot_available": str(data[data['spot_id']==idx].slot_available.values[0]),
         "available": list(map(str, data[data['spot_id'] == idx].available.values[0])),
-        "price": str(data[data['spot_id'] == idx].price[0])
+        "price": str(data[data['spot_id'] == idx].price.values[0]),
+        "name": str(data[data['spot_id']==idx].name.values[0]),
+        "contact": str(data[data['spot_id']==idx].contact.values[0])
         }
 
     return make_response(jsonify(res))
