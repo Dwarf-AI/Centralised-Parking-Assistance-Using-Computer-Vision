@@ -1,5 +1,5 @@
 import threading
-from extras import calc_dist_km as dist
+from extras import calc_dist_km as dist, RepeatedTimer
 from flask import Flask, request, make_response, jsonify
 import pandas as pd
 from updater import updater
@@ -91,7 +91,7 @@ data.loc[2] = [
     "1234567890"
 ]
 
-updater(data)
+rt = RepeatedTimer(300, updater, data) # it auto-starts, no need of rt.start()
 
 
 @app.route("/", methods=["GET"])
