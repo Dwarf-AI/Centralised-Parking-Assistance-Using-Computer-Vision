@@ -2,7 +2,9 @@ import numpy as np
 import pandas as pd
 from math import sin, cos, sqrt, atan2, radians
 from threading import Timer
-import time
+
+# approximate radius of earth in km
+R = 6373.0
 
 
 class RepeatedTimer(object):
@@ -30,9 +32,6 @@ class RepeatedTimer(object):
         self._timer.cancel()
         self.is_running = False
 
-
-# approximate radius of earth in km
-R = 6373.0
 
 def calc_dist_km(lat1, lon1, lat2, lon2):
     """

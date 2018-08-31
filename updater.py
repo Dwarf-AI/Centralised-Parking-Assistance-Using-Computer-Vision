@@ -13,11 +13,18 @@ import time
 import sys
 import shutil
 import requests
+import json
 
 def updater(database):
   
-#   database = data
-  
+  if exists('add_database.csv'):
+    new_data = pd.read_csv('add_database.csv')
+    new_data.coordinates = new_data.coordinates.apply(lambda s: json.loads(s))
+    new_data.available = new_data.available.apply(lambda s:json.loads(s))
+    database = database.append(new_data, ignore_index=True)
+    os.remove('add_database.csv')
+    database.to_csv('database.csv',index=False)
+#   print(database)
   for index,row in database.iterrows():
     spot_id = str(row['spot_id'])
     url = "https://api.dropboxapi.com/2/files/list_folder"
@@ -34,14 +41,14 @@ def updater(database):
 
     response = response.json()
 
-    photos = set()
+    photos = []
 
     for dic in response['entries']:
-      photos.add(dic['name'])
+      photos.append(dic['name'])
 
-    photos = list(photos)
+    photos = sorted(photos)
 
-
+    print(photos)
 
 
     url = "https://content.dropboxapi.com/2/files/download"
@@ -67,8 +74,7 @@ def updater(database):
     server_host = "192.168.43.20"
     server_port = 5000
     total_time = 0
-
-    # IMAGE_DIR = '../images/test_images/test.jpeg'
+    
     CHECKPOINT_DIR = 'weights/checkpoint-07-0.07.hdf5'
 
     if not exists(IMAGE_DIR):
@@ -82,7 +88,6 @@ def updater(database):
     model = load_model(CHECKPOINT_DIR, custom_objects={'LocalResponseNormalization': LocalResponseNormalization})
 
     while True:
-        # os.system('streamer -c /dev/video0 -o /media/aman/BE66ECBA66EC75151/Projects/IdeaQuest/images/final_detection/image.ppm')
         im = imread(IMAGE_DIR)
     #     imshow(im)
         im = Image.fromarray(im)
@@ -91,6 +96,7 @@ def updater(database):
 
         images = []
         for cord in row['coordinates']:
+#           print(cord)
           im_ = Image.fromarray(im[cord[1]:cord[3],cord[0]:cord[2]])
           im_ = im_.resize((54, 32))
           im_ = np.array(im_)
@@ -100,9 +106,9 @@ def updater(database):
         images = np.array(images)
 
         predictions = model.predict(images, verbose=1)
-        print(predictions)
+#         print(predictions)
         predictions = np.hstack(predictions < 0.5).astype(int)
-        print(predictions)
+#         print(predictions)
         
         predictions = 1 - predictions
         database.at[index,'available'] = predictions
@@ -112,19 +118,6 @@ def updater(database):
 #         for cord in row['coordinates']:
 #           im_ = cv2.rectangle(im_,(cord[0],cord[1]),(cord[2],cord[3]),(255*int(predictions[i]),255*int(1-predictions[i]),0),2)
 #           i += 1
-#         imshow(im_)
+#         plt.imshow(im_)
         break
-        # total = str(len(predictions))
-        # available = str(len(np.where(predictions == 1)[0]))
-        # detail = ''
-        # for pred in predictions:
-        #     detail += str(pred)
-
-        # data = "magic=" + MAGIC + "::identity=" + identity + "::total=" + total + "::available=" + available + "::detail=" + detail
-        # print(data)
-        # server_socket = socket.socket()
-
-        # server_socket.connect((server_host, server_port))    
-        # server_socket.send(data)
-      # server_socket.close()
-        # time.sleep(5)
+        

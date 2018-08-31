@@ -33,11 +33,12 @@ We will build a system using computer vision that will parse parking space data 
 <img src="https://raw.githubusercontent.com/kunalgoyal9/MoveHack/master/images/KunalPark2.png" width = "300" height = "300"/>
 </p>
 
+
 * Data from all such parking spaces in city will be parsed to centralized cloud database.
 * Any driver in the city can see nearest available parking spot for their vehicle on their mobile devices.
 
 <p align="center">
-<img src="https://github.com/i-amgeek/MoveHack/blob/master/images/Screenshot1.jpg" width = "300" height = "500"/>
+<img src="https://github.com/i-amgeek/MoveHack/blob/master/images/Screenshot1.jpg" width = "250" height = "400"/>
 </p>
 
 * Driver can select parking spot to view details, available slots and book them.
