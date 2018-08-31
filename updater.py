@@ -13,11 +13,18 @@ import time
 import sys
 import shutil
 import requests
+import json
 
 def updater(database):
   
-#   database = data
-  
+  if exists('add_database.csv'):
+    new_data = pd.read_csv('add_database.csv')
+    new_data.coordinates = new_data.coordinates.apply(lambda s: json.loads(s))
+    new_data.available = new_data.available.apply(lambda s:json.loads(s))
+    database = database.append(new_data, ignore_index=True)
+    os.remove('add_database.csv')
+    database.to_csv('database.csv',index=False)
+#   print(database)
   for index,row in database.iterrows():
     spot_id = str(row['spot_id'])
     url = "https://api.dropboxapi.com/2/files/list_folder"
@@ -89,6 +96,7 @@ def updater(database):
 
         images = []
         for cord in row['coordinates']:
+#           print(cord)
           im_ = Image.fromarray(im[cord[1]:cord[3],cord[0]:cord[2]])
           im_ = im_.resize((54, 32))
           im_ = np.array(im_)
@@ -98,9 +106,9 @@ def updater(database):
         images = np.array(images)
 
         predictions = model.predict(images, verbose=1)
-        print(predictions)
+#         print(predictions)
         predictions = np.hstack(predictions < 0.5).astype(int)
-        print(predictions)
+#         print(predictions)
         
         predictions = 1 - predictions
         database.at[index,'available'] = predictions
