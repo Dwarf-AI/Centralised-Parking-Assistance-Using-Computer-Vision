@@ -40,7 +40,7 @@ photos = set()
 for dic in response['entries']:
   photos.add(dic['name'])
 
-photos = list(photos)
+photos = sorted(list(photos))
 
 
 url = "https://content.dropboxapi.com/2/files/download"
@@ -66,7 +66,7 @@ im = plt.imread(IMAGE_DIR)
 im = Image.fromarray(im)
 
 im = im.resize((500, 400))
-
+print(photos)
 im.save(IMAGE_DIR)
 
 imshow(im)

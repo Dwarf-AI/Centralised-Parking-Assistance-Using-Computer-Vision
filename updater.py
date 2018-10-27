@@ -14,17 +14,20 @@ import sys
 import shutil
 import requests
 import json
+import pandas as pd
 
 def updater(database):
-  
+  print("updater_check")
+
   if exists('add_database.csv'):
-    new_data = pd.read_csv('add_database.csv')
+    new_data = pd.read_pickle('add_database.csv')
     new_data.coordinates = new_data.coordinates.apply(lambda s: json.loads(s))
     new_data.available = new_data.available.apply(lambda s:json.loads(s))
     database = database.append(new_data, ignore_index=True)
     os.remove('add_database.csv')
-    database.to_csv('database.csv',index=False)
+    database.to_pickle('database.csv',index=False)
 #   print(database)
+  print(database)
   for index,row in database.iterrows():
     spot_id = str(row['spot_id'])
     url = "https://api.dropboxapi.com/2/files/list_folder"
@@ -44,12 +47,9 @@ def updater(database):
     photos = []
 
     for dic in response['entries']:
-      photos.append(dic['name'])
+        photos.append(dic['name'])
 
     photos = sorted(photos)
-
-    print(photos)
-
 
     url = "https://content.dropboxapi.com/2/files/download"
 
@@ -75,7 +75,7 @@ def updater(database):
     server_port = 5000
     total_time = 0
     
-    CHECKPOINT_DIR = 'weights/checkpoint-07-0.07.hdf5'
+    CHECKPOINT_DIR = 'test_model/weights/checkpoint-07-0.07.hdf5'
 
     if not exists(IMAGE_DIR):
         print('Image file missing... Exiting!!')
@@ -84,35 +84,37 @@ def updater(database):
     if not exists(CHECKPOINT_DIR):
         print('Checkpoint file missing... Exiting!!')
         sys.exit(0)
-
+    #print('kuna')
     model = load_model(CHECKPOINT_DIR, custom_objects={'LocalResponseNormalization': LocalResponseNormalization})
-
+    
     while True:
         im = imread(IMAGE_DIR)
     #     imshow(im)
         im = Image.fromarray(im)
         im = im.resize((500, 400))
         im = np.array(im)
-
+        
         images = []
         for cord in row['coordinates']:
-#           print(cord)
-          im_ = Image.fromarray(im[cord[1]:cord[3],cord[0]:cord[2]])
-          im_ = im_.resize((54, 32))
-          im_ = np.array(im_)
-          im_ = im_.transpose(1,0,2)
-          images.append(im_) 
+            print(cord)
+            #print('*****************')
+            im_ = Image.fromarray(im[cord[1]:cord[3],cord[0]:cord[2]])
+            im_ = im_.resize((54, 32))
+            im_ = np.array(im_)
+            im_ = im_.transpose(1,0,2)
+            images.append(im_) 
 
         images = np.array(images)
 
         predictions = model.predict(images, verbose=1)
 #         print(predictions)
         predictions = np.hstack(predictions < 0.5).astype(int)
-#         print(predictions)
+        print(predictions)
         
         predictions = 1 - predictions
         database.at[index,'available'] = predictions
         database.at[index,'slot_available'] = np.sum(predictions)
+        print(database)
 #         i = 0
 #         im_ = np.copy(im)
 #         for cord in row['coordinates']:
@@ -120,4 +122,4 @@ def updater(database):
 #           i += 1
 #         plt.imshow(im_)
         break
-        
+    return database

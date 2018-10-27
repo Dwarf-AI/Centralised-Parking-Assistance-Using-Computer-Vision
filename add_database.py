@@ -1,3 +1,4 @@
+
 import pandas as pd
 from os.path import exists 
 data = pd.DataFrame(columns=[
@@ -15,12 +16,13 @@ data = pd.DataFrame(columns=[
 ])
 
 data.loc[0] = None
-data.loc[0].spot_id = input('what is spot_id?\n')
+print('what is spot_id?\n')
+data.loc[0].spot_id = input()
 data.loc[0].latitude = input('what is latitude?\n')
 data.loc[0].longitude = input('what is longitude?\n')
 data.loc[0].rows = int(input('No. of rows?\n'))
 data.loc[0].cols = int(input('No. of cols?\n'))
-data.loc[0].available = [1 for i in range(data.loc[0].rows*data.loc[0].cols)]
+data.loc[0].available = [0 for i in range(data.loc[0].rows*data.loc[0].cols)]
 data.loc[0].slot_available = data.loc[0].rows*data.loc[0].cols
 data.loc[0].coordinates = []
 
@@ -40,4 +42,5 @@ if exists('add_database.csv'):
     new_data = pd.read_csv('add_database.csv')
     data = data.append(new_data, ignore_index=True)
 
-data.to_csv('add_database.csv',index=False)
+# data.to_csv('add_database.csv',index=False)
+data.to_pickle('add_database.csv')
