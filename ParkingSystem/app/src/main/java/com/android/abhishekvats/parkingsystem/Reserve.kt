@@ -17,7 +17,8 @@ import android.os.VibrationEffect
 import android.os.Build
 import android.content.Context.VIBRATOR_SERVICE
 import android.os.Vibrator
-
+import android.content.Intent
+import android.net.Uri
 
 
 class Reserve : AppCompatActivity() {
@@ -27,9 +28,9 @@ class Reserve : AppCompatActivity() {
     lateinit var layoutparams: LinearLayout.LayoutParams
     lateinit var listener:View.OnClickListener
     var buttonList=ArrayList<Button>()
-    var array=arrayOf(0,1,1,1,0,0,0,1,0,1,0,1,0,1,0)
-    var col=4
-    var row=2
+    lateinit var array:IntArray
+    var col=0
+    var row=0
     var price=""
     var clicks=0
     fun onClick(view: View){
@@ -41,6 +42,17 @@ class Reserve : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_reserve)
+
+        var lat=intent.getStringExtra("lat")
+        var long=intent.getStringExtra("long")
+
+        navigate.setOnClickListener {
+            val gmmIntentUri = Uri.parse("google.navigation:q=$lat,$long")
+            val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)
+            mapIntent.setPackage("com.google.android.apps.maps")
+            startActivity(mapIntent)
+        }
+
 
         listener=View.OnClickListener {
             if(it.tag==0) {
@@ -57,26 +69,40 @@ class Reserve : AppCompatActivity() {
             }
         }
         supportActionBar!!.title="Pick Your Spot"
-//        col=intent.getIntExtra("cols",0)
-//        row=intent.getIntExtra("rows",0)
+        array=intent.getIntArrayExtra("array")
+        col=intent.getIntExtra("rows",0)
+        row=intent.getIntExtra("cols",0)
         price=intent.getStringExtra("price")
 
-        for(i in 0..row-1){
+
+//        for(i in 0..3)
+//        {
+//            for(j in 1..0){
+//
+//            }
+//        }
+
+
+
+
+
+
+        for(i in row-1 downTo  0){
             layout= LinearLayout(this)
             layout.orientation=LinearLayout.HORIZONTAL
             for(j in 0..col-1)
             {
-                var startIndex=i*4
+                var startIndex=i
                 var button=Button(this)
                 buttonparams=LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT)
                 buttonparams.setMargins(5,5,5,5)
                 buttonparams.weight=1f
                 button.layoutParams = buttonparams
-                if(array[startIndex+j]==0){
+                if(array[startIndex+j*2]==1){
                     button.setBackgroundResource(R.drawable.empty_spot)
                     button.tag=0
                 }
-                else if(array[startIndex+j]==1){
+                else if(array[startIndex+j*2]==0){
                     button.setBackgroundResource(R.drawable.booked_spot)
                 }
                 buttonList.add(button)
