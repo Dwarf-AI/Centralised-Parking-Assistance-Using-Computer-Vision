@@ -68,7 +68,6 @@ Use [pip](https://pypi.python.org/pypi/pip) to install them.
 $ git clone --recursive https://github.com/i-amgeek/MoveHack
 $ python3.6 -m pip3 install -r requirements.txt
 $ cd test\ model
-$ wget -P weights/ 'https://drive.google.com/open?id=0B76BuJcKjuxqYXRmSzd2R3U4S2c'
 $ python3.6 test.py
 ```
 
